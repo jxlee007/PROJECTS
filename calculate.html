@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            background-image: linear-gradient(to right top, #33a699, #44aca0, #53b2a7, #60b8ae, #6dbeb5, #71c5bc, #75ccc3, #79d3ca, #75ddd3, #6fe7dd, #68f1e7, #5ffbf1);
+        }
+
+        header {
+            background-color: transparent;
+            text-transform: uppercase;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        #main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            text-align: center;
+        }
+
+        #container {
+            display: flex;
+            flex-wrap: wrap;
+            background-color: snow;
+            /* color: #ff*/
+            position: relative;
+            overflow: hidden;
+            border: .1vw solid snow;
+            border-radius: 1.5vw;
+        }
+
+        #menu {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            z-index: 2;
+            background-color: red;
+        }
+
+        table{
+            border-bottom-left-radius:2vw ;
+            border-bottom-right-radius:2vw ;
+        }
+
+        table td {
+            height: 6vw;
+            width: 8vw;
+            border-collapse: collapse;
+        }
+
+        button {
+            height: 100%;
+            width: 100%;
+            font-size: 4vw;
+            text-transform: uppercase;
+            background-color: #e0e8e8;
+            /* opacity: 0.5; */
+            /* background-color: #fff; */
+            /* border-radius: 1vw; */
+            color: #07171d;
+
+        }
+
+        button:active {
+            /* opacity: 0.9; */
+            transition: .1s ease-in-out;
+            background: white;
+        }
+
+        
+
+        input[type="text"] {
+            background-color: #0b4069;
+            color: #fff;
+            height: 15vw;
+            width: 100%;
+            font-size: 2vw;
+            text-align: right;
+            border-top-left-radius: 1.5vw;
+            border-top-right-radius: 1.5vw;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>calculator</h1>
+    </header>
+    <section id="main">
+        <div id="container">
+
+
+            <table>
+                <tbody>
+                </tr>
+
+                <tr>
+                    <td colspan="5">
+                        <input type="text" id="result">
+                    </td>
+                </tr>
+                <tr>
+                    <td><button style="background-color: #4c9088;">AC</button></td>
+                    <td><button style="background-color: #4c9088;">%</button></td>
+                    <td><button style="background-color: #4c9088;">C</button></td>
+                    <td><button style="background-color: #4c9088;">×</button></td>
+                </tr>
+                <tr>
+                    <td><button>7</button></td>
+                    <td><button>8</button></td>
+                    <td><button>9</button></td>
+                    <td><button style="background-color: #4c9088;">/</button></td>
+                </tr>
+                <tr>
+                    <td><button>4</button></td>
+                    <td><button>5</button></td>
+                    <td><button>6</button></td>
+                    <td><button style="background-color: #4c9088;">-</button></td>
+                </tr>
+                <tr>
+                    <td><button>1</button></td>
+                    <td><button>2</button></td>
+                    <td><button>3</button></td>
+                    <td><button style="background-color: #4c9088;" >+</button></td>
+                </tr>
+                <tr>
+                    <td><button>0</button></td>
+                    <td><button>.</button></td>
+                    <td colspan="2"><button style="background-color: #31a598;">=</button></td>
+                </tr>
+
+                </tbody>
+                
+            </table>
+
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
+            integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <script>
+            // rotate history me
+            let count = 0;
+
+            function menu() {
+                count++;
+                // Access DOM element object
+                const rotated = document.getElementById('menubtn');
+
+                let deg = count * 180;
+                // Rotate element by 90 degrees clockwise
+                // rotated.style.transform = 'rotate(180deg)';
+                rotated.style.transform = "rotate(" + deg + "deg)";
+                rotated.style.transition = 'all 0.2s ease-in-out';
+
+                document.getElementById("sidebar").style.width = "100%";
+            }
+
+
+
+            function closeNav() {
+                document.getElementById("sidebar").style.width = "0";
+            }
+
+            let result = document.getElementById("result");
+let buttons = document.querySelectorAll("button");
+let resultValue = "";
+for (item of buttons) {
+    item.addEventListener("click", (e) => {
+        buttonText = e.target.innerText;
+        console.log("Button text is ", buttonText);
+        if (buttonText == "×") {
+            buttonText = "*";
+            resultValue += buttonText;
+            result.value = resultValue;
+        } else if (buttonText == "÷") {
+            buttonText = "/";
+            resultValue += buttonText;
+            result.value = resultValue;
+        } else if (buttonText == "=") {
+            result.value = eval(resultValue);
+        } else if (buttonText == "AC") {
+            resultValue = "";
+            result.value = resultValue;
+        } else if (buttonText == "C") {
+            resultValue = resultValue.slice(0, -1);
+            result.value = resultValue;
+        } else {
+            resultValue += buttonText;
+            result.value = resultValue;
+        }
+    })
+}
+
+
+
+
+
+        </script>
+
+
+
+
+    </section>
+</body>
+
+</html>
